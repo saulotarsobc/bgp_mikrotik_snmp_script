@@ -1,6 +1,7 @@
 :global lista [/routing bgp peer find];
 :global total [:len $lista];
 :global contador 0;
+#abre json
 :put "{";
 :foreach i in=$lista do={;
     :set contador ($contador + 1);
@@ -17,4 +18,5 @@
         };
     };
 };
+#fecha json
 :put "}";
