@@ -1,22 +1,22 @@
 :global lista [/routing bgp peer find];
 :global total [:len $lista];
 :global contador 0;
-#abre json
-:put "{";
+:put "{"; #abre json
 :foreach i in=$lista do={;
     :set contador ($contador + 1);
-    :local name [/routing bgp peer get value-name=name number=$i];
-    :local prefix [/routing bgp peer get value-name=prefix number=$i];
-    :local state [/routing bgp peer get value-name=state number=$i];
-    :local remoteas [/routing bgp peer get value-name=remote-as number=$i];
-    :local disabled [/routing bgp peer get value-name=disabled number=$i];
+    :global name [/routing bgp peer get value-name=name number=$i];
+    :global prefix [/routing bgp peer get value-name=prefix number=$i];
+    :global state [/routing bgp peer get value-name=state number=$i];
+    :global remoteAS [/routing bgp peer get value-name=remote-as number=$i];
+    :global disabled [/routing bgp peer get value-name=disabled number=$i];
+    :global uptime [/routing bgp peer get value-name=uptime number=$i];
+    :global remoteAddress [/routing bgp peer get value-name=remote-address number=$i];
     :if ( disabled != true) do={\
         :if ( $contador < $total) do={\
-            :put "\"$name\":{\"REMOTEAS\":\"$remoteas\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\"},";
-        } else={;\
-            :put "\"$name\":{\"REMOTEAS\":\"$remoteas\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\"}";
+            :put "\"$name\":{\"REMOTEAS\":\"$remoteAS\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\",\"UPTIME\":\"$uptime\",\"REMOTEADDRESS\":\"$remoteAddress\"},";
+        } else={\
+            :put "\"$name\":{\"REMOTEAS\":\"$remoteAS\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\",\"UPTIME\":\"$uptime\",\"REMOTEADDRESS\":\"$remoteAddress\"}";
         };
     };
 };
-#fecha json
-:put "}";
+:put "}"; #fecha json
