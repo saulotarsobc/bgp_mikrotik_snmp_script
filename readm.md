@@ -1,1 +1,0 @@
-# MIKROTIK - BGP - SNPM + SCRIPT
