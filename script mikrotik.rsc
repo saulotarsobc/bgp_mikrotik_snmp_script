@@ -1,7 +1,7 @@
 :global lista [/routing bgp peer find];
 :global total [:len $lista];
 :global contador 0;
-:put "{"; #abre json
+:put "["; #abre json
 :foreach i in=$lista do={;
     :set contador ($contador + 1);
     :local name [/routing bgp peer get value-name=name number=$i];
@@ -14,11 +14,11 @@
     # "descomentar" a linha seguinte se NÃO quiser monitorar os peer's desabilidados
     #:if ( disabled = false) do={\
         :if ( $contador < $total) do={\
-            :put "\"$name\":{\"REMOTEAS\":\"$remoteAS\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\",\"UPTIME\":\"$uptime\",\"REMOTEADDRESS\":\"$remoteAddress\"},";
+            :put "{\"NAME\":\"$name\",\"REMOTEAS\":\"$remoteAS\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\",\"UPTIME\":\"$uptime\",\"REMOTEADDRESS\":\"$remoteAddress\"},";
         } else={\
-            :put "\"$name\":{\"REMOTEAS\":\"$remoteAS\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\",\"UPTIME\":\"$uptime\",\"REMOTEADDRESS\":\"$remoteAddress\"}";
+            :put "{\"NAME\":\"$name\",\"REMOTEAS\":\"$remoteAS\",\"DISABLED\":\"$disabled\",\"PREFIX\":\"$prefix\",\"STATE\":\"$state\",\"UPTIME\":\"$uptime\",\"REMOTEADDRESS\":\"$remoteAddress\"}";
         };
     # "descomentar" a linha seguinte se NÃO quiser monitorar os peer's desabilidados
     #};
 };
-:put "}"; #fecha json
+:put "]"; #fecha json
