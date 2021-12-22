@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2021-12-21T19:02:36Z</date>
+    <date>2021-12-22T11:45:26Z</date>
     <groups>
         <group>
             <uuid>24642af6add243ecb0e9241b092ea2a8</uuid>
@@ -50,8 +50,29 @@
                     <lifetime>0d</lifetime>
                     <item_prototypes>
                         <item_prototype>
+                            <uuid>b4d90227635e423ba6dcaf6938248045</uuid>
+                            <name>{#NAME} - Local Address</name>
+                            <type>DEPENDENT</type>
+                            <key>local.add[{#NAME}]</key>
+                            <delay>0</delay>
+                            <history>1d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.[?(@.NAME == '{#NAME}')].LOCALADDRESS.first()</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>data</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
                             <uuid>fe5660e32ce64f31ac9f23ebcb10e640</uuid>
-                            <name>{#NAME} - Remote Add</name>
+                            <name>{#NAME} - Remote Address</name>
                             <type>DEPENDENT</type>
                             <key>remote.add[{#NAME}]</key>
                             <delay>0</delay>
@@ -97,8 +118,7 @@
                             <key>remote.predix[{#NAME}]</key>
                             <delay>0</delay>
                             <history>1d</history>
-                            <trends>0</trends>
-                            <value_type>CHAR</value_type>
+                            <trends>1d</trends>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
