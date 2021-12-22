@@ -5,6 +5,9 @@
 :foreach i in=$lista do={;
     :global name [/routing bgp peer get value-name=name number=$i];
     :global prefix [/routing bgp peer get value-name=prefix number=$i];
+    if (prefix < 1) do={
+        :set prefix 0;
+    }
     :global state [/routing bgp peer get value-name=state number=$i];
     :global remoteAS [/routing bgp peer get value-name=remote-as number=$i];
     :global disabled [/routing bgp peer get value-name=disabled number=$i];
