@@ -32,4 +32,3 @@ if (value === 'idle'){
 ## APOIO
 
 * [Manual:Routing/BGP](https://wiki.mikrotik.com/wiki/Manual:Routing/BGP)
-
