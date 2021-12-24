@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2021-12-22T11:45:26Z</date>
+    <date>2021-12-24T13:47:43Z</date>
     <groups>
         <group>
             <uuid>24642af6add243ecb0e9241b092ea2a8</uuid>
@@ -69,6 +69,12 @@
                             <master_item>
                                 <key>data</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipo</tag>
+                                    <value>local address</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
                             <uuid>fe5660e32ce64f31ac9f23ebcb10e640</uuid>
@@ -90,6 +96,12 @@
                             <master_item>
                                 <key>data</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipe</tag>
+                                    <value>remote address</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
                             <uuid>ba363b78835a4a3ab8327c2bbd181fb1</uuid>
@@ -110,6 +122,12 @@
                             <master_item>
                                 <key>data</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipo</tag>
+                                    <value>remote as</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
                             <uuid>487989816e08413eb0f7888ce8689f10</uuid>
@@ -130,6 +148,12 @@
                             <master_item>
                                 <key>data</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipo</tag>
+                                    <value>prefix</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
                             <uuid>6e913c6b71804fb2b3a5f0c9e6a68468</uuid>
@@ -138,8 +162,10 @@
                             <key>remote.state[{#NAME}]</key>
                             <delay>0</delay>
                             <history>1d</history>
-                            <trends>0</trends>
-                            <value_type>CHAR</value_type>
+                            <trends>1d</trends>
+                            <valuemap>
+                                <name>BGP STATUS</name>
+                            </valuemap>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -151,6 +177,12 @@
                             <master_item>
                                 <key>data</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipo</tag>
+                                    <value>state</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
                             <uuid>4b466af2702848fcac3acc746047169b</uuid>
@@ -159,8 +191,8 @@
                             <key>remote.uptime[{#NAME}]</key>
                             <delay>0</delay>
                             <history>1d</history>
-                            <trends>0</trends>
-                            <value_type>CHAR</value_type>
+                            <trends>1d</trends>
+                            <units>uptime</units>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -172,6 +204,64 @@
                             <master_item>
                                 <key>data</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipo</tag>
+                                    <value>uptime</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>8a3dc22b7cbd4fae9737a02d7c84b52a</uuid>
+                            <name>{#NAME} - Updates Received</name>
+                            <type>DEPENDENT</type>
+                            <key>updates.received[{#NAME}]</key>
+                            <delay>0</delay>
+                            <history>1d</history>
+                            <trends>1d</trends>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.[?(@.NAME == '{#NAME}')].UPDATESRECEIVED.first()</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>data</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipo</tag>
+                                    <value>updates received</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>7ceb31614f7a4df2b064bc54101ed43e</uuid>
+                            <name>{#NAME} - Updates Sent</name>
+                            <type>DEPENDENT</type>
+                            <key>updates.sent[{#NAME}]</key>
+                            <delay>0</delay>
+                            <history>1d</history>
+                            <trends>1d</trends>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.[?(@.NAME == '{#NAME}')].UPDATESSENT.first()</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>data</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>tipo</tag>
+                                    <value>updates sent</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                     </item_prototypes>
                     <master_item>
@@ -196,6 +286,38 @@
                     <description>INDEX DO SCRIPT BGP</description>
                 </macro>
             </macros>
+            <valuemaps>
+                <valuemap>
+                    <uuid>ff46aabfed4e4967b1e5f1763a31a298</uuid>
+                    <name>BGP STATUS</name>
+                    <mappings>
+                        <mapping>
+                            <value>1</value>
+                            <newvalue>idle</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2</value>
+                            <newvalue>connect</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>3</value>
+                            <newvalue>active</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>4</value>
+                            <newvalue>opensent</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>5</value>
+                            <newvalue>openconfirm</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>6</value>
+                            <newvalue>established</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+            </valuemaps>
         </template>
     </templates>
 </zabbix_export>
