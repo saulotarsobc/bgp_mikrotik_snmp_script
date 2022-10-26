@@ -9,10 +9,4 @@
 ## APOIO
 
 * [Manual:Routing/BGP](https://wiki.mikrotik.com/wiki/Manual:Routing/BGP)
-  * BGP protocol state
-    1) idle
-    2) connect
-    3) active
-    4) opensent
-    5) openconfirm
-    6) established
+  * BGP protocol state (idle, connect, active, opensent, openconfirm e established)
